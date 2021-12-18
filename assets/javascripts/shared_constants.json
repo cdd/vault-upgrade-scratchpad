@@ -1,0 +1,233 @@
+{
+  "README": "These constants are shared by ruby and JS and updated by `rake update_shared_constants`.  Do not use shared_constants.json directly, use constants.js.",
+  "DATE_DISPLAY_FORMAT": "YYYY-MM-DD",
+  "DATE_TIME_DISPLAY_FORMAT": "YYYY-MM-DD H:mm:ss",
+  "QUERY_STYLE_LABELS": {
+    "any": "(Any Value)",
+    "has": "has",
+    "equal": "=",
+    "lt": "<",
+    "gt": ">",
+    "lte": "≤",
+    "gte": "≥",
+    "range": "from",
+    "not": "not",
+    "none": "(No Value)"
+  },
+  "QUERY_STYLES_EXTRA_LABELS": {
+    "range": [
+      "to"
+    ]
+  },
+  "QUERY_LESS_STYLES": [
+    "any",
+    "none"
+  ],
+  "SINGLE_QUERY_STYLES": [
+    "has",
+    "equal",
+    "lt",
+    "gt",
+    "lte",
+    "gte",
+    "not"
+  ],
+  "DOUBLE_QUERY_STYLES": [
+    "range"
+  ],
+  "RANGE_QUERY_STYLES": [
+    "range",
+    "lte",
+    "gte",
+    "lt",
+    "gt"
+  ],
+  "NEGATION_EXISTS_QUERY_STYLE": "none",
+  "NEGATION_FULL_QUERY_STYLES": [
+    "not"
+  ],
+  "DEFAULT_EXISTS_QUERY_STYLE": "any",
+  "DEFAULT_FULL_QUERY_STYLES": [
+    "has"
+  ],
+  "ANY_FIELD_QUERY_STYLES": [
+    "any",
+    "has",
+    "not",
+    "none"
+  ],
+  "ANY_FIELD_QUERY_STYLE_LABELS": {
+    "any": "(Any Value)",
+    "has": "has",
+    "not": "not",
+    "none": "(No Value)"
+  },
+  "TEXT_QUERY_STYLES": [
+    "any",
+    "has",
+    "range",
+    "not",
+    "none"
+  ],
+  "TEXT_QUERY_STYLE_LABELS": {
+    "any": "(Any Value)",
+    "has": "has",
+    "range": "from",
+    "not": "not",
+    "none": "(No Value)"
+  },
+  "NUMBER_QUERY_STYLES": [
+    "any",
+    "range",
+    "none"
+  ],
+  "NUMBER_QUERY_STYLE_LABELS": {
+    "any": "(Any Value)",
+    "range": "from",
+    "none": "(No Value)"
+  },
+  "DATE_QUERY_STYLES": [
+    "any",
+    "range",
+    "none"
+  ],
+  "DATE_QUERY_STYLE_LABELS": {
+    "any": "(Any Value)",
+    "range": "from",
+    "none": "(No Value)"
+  },
+  "MOLECULE_REPRESENTATIONS_ID_LIST": [
+    "structure_representation_smiles_",
+    "structure_representation_cxsmiles_",
+    "structure_representation_inchi_",
+    "structure_representation_inchi_key_",
+    "structure_representation_iupac_"
+  ],
+  "REGISTRATION_TYPES": {
+    "REGISTRATION_TYPE_CHEMICAL_STRUCTURE": "CHEMICAL_STRUCTURE",
+    "REGISTRATION_TYPE_MIXTURE": "MIXTURE",
+    "REGISTRATION_TYPE_NUCLEOTIDE": "NUCLEOTIDE",
+    "REGISTRATION_TYPE_AMINO_ACID": "AMINO_ACID",
+    "REGISTRATION_TYPE_OTHER": "OTHER"
+  },
+  "ELN_NODE_TYPES": [
+    "file",
+    "structure",
+    "reaction",
+    "link",
+    "document",
+    "paragraph",
+    "table",
+    "table_row",
+    "table_cell",
+    "header-one",
+    "header-two",
+    "bulleted-list",
+    "numbered-list",
+    "check-list",
+    "list-item",
+    "check-list-item",
+    "assay-annotation",
+    "mixture",
+    "timestamp"
+  ],
+  "ELN_INDEX_PAGE_LIMIT": 30,
+  "ELN_FILTER_STYLES": [
+    {
+      "key": "any",
+      "value": "(Any Value)",
+      "positive": true,
+      "general": true,
+      "ranged": false
+    },
+    {
+      "key": "has",
+      "value": "has",
+      "positive": true,
+      "general": false,
+      "ranged": false
+    },
+    {
+      "key": "from",
+      "value": "from",
+      "positive": true,
+      "general": false,
+      "ranged": true
+    },
+    {
+      "key": "no",
+      "value": "(No Value)",
+      "positive": false,
+      "general": true,
+      "ranged": false
+    }
+  ],
+  "ELN_DEFAULT_RESULT_COLUMNS": [
+    {
+      "eln_field_definition_id": null,
+      "direction": null,
+      "field_name": "ID"
+    },
+    {
+      "eln_field_definition_id": null,
+      "direction": null,
+      "field_name": "Title"
+    },
+    {
+      "eln_field_definition_id": null,
+      "direction": null,
+      "field_name": "Author"
+    },
+    {
+      "eln_field_definition_id": null,
+      "direction": "desc",
+      "field_name": "Modified"
+    },
+    {
+      "eln_field_definition_id": null,
+      "direction": null,
+      "field_name": "Created"
+    },
+    {
+      "eln_field_definition_id": null,
+      "direction": null,
+      "field_name": "Status"
+    }
+  ],
+  "ELN_DEFAULT_SORT_COLUMN": {
+    "field_name": "Modified",
+    "direction": "desc"
+  },
+  "ELN_SORT_COLUMN_ASCENDING": "asc",
+  "ELN_SORT_COLUMN_DESCENDING": "desc",
+  "ELN_STRUCTURE_EXTENSIONS": [
+    "cdx",
+    "cdxml"
+  ],
+  "ELN_3DMOL_EXTENSIONS": [
+    "pdb",
+    "cif",
+    "mcif",
+    "mmcif",
+    "mol2"
+  ],
+  "ELN_REDUNDANT_AUDIT_TRAIL_EVENT_NAMES": [
+    "modified"
+  ],
+  "ELN_ROUTES_AUDIT_TRAIL": "audit-trail",
+  "ELN_EVENT_NAMES": {
+    "ELN_INITIALIZED_EVENT_NAME": "initialized",
+    "ELN_DUPLICATION_EVENT_NAME": "created_by_duplication",
+    "ELN_REJECTION_REASON_EVENT_NAME": "justified_rejection",
+    "ELN_REOPENING_REASON_EVENT_NAME": "justified_reopening",
+    "ELN_MODIFIED_EVENT_NAME": "modified"
+  },
+  "ELN_ATTACHED_STRUCTURE_ANCHOR_KEY": "attached_structures",
+  "ELN_STOICHIOMETRY_ROW_ANCHOR_KEY": "reaction_components",
+  "ELN_INTERNAL_LINK_VALID_URL_SCHEMES": [
+    "http",
+    "https",
+    "ftp",
+    "mailto"
+  ]
+}

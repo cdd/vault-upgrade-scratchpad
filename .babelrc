@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0",
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": "> 1%",
+          "uglify": true
+        },
+        "useBuiltIns": true
+      }
+    ],
+    "react",
+  ],
+  "plugins": [
+    "add-react-displayname",
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "syntax-dynamic-import",
+    "transform-object-rest-spread",
+  ]
+}

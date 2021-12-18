@@ -1,0 +1,38 @@
+default: &default
+  discovery_url: https://ffc-onenote.officeapps.live.com/hosting/discovery # wopi test server
+  cdd_wopi_base_url: wopi.cdd.io # our testing url
+  whitelist_applications: false
+
+development: &development
+  <<: *default
+  cdd_wopi_base_url: cdd # docker image hostname
+
+test: &test
+  <<: *default
+
+selenium: &selenium
+  <<: *test
+
+production: &production
+  <<: *default
+  discovery_url: https://onenote.officeapps.live.com/hosting/discovery # wopi production server
+  cdd_wopi_base_url: wopi.app.collaborativedrug.com
+  whitelist_applications:
+    - Excel
+    - OneNote
+    - PowerPoint
+    - Visio
+    - Word
+
+qa: &qa
+  <<: *production
+  cdd_wopi_base_url: wopi.qa.collaborativedrug.com
+
+pentest: &pentest
+  <<: *default
+  whitelist_applications:
+    - Excel
+    - OneNote
+    - PowerPoint
+    - Visio
+    - Word
