@@ -1,6 +1,7 @@
 const environment = require("./environment.js")
 const webpack = require("webpack")
 const path = require('path')
+const nodeExternals = require('webpack-node-externals')
 
 const defaultConfig = environment.toWebpackConfig()
 
@@ -10,12 +11,17 @@ let server = {}
 
 server.target = 'node'
 
-server.entry  = {
+server.entry = {
   'slate-server': [
     './lib/eln/modules/jsdom-global.js',
     './lib/eln/slate-server.js',
   ]
 }
+
+server.optimization = { minimize: false }
+server.externals = [nodeExternals({
+  allowlist: ['jquery', 'webpack/hot/dev-server', /^lodash/]
+})] // in order to ignore all modules in node_modules folder
 
 server.output = {
   path: outputDir,
@@ -27,7 +33,7 @@ server.devServer = {
 }
 
 server.resolve = defaultConfig.resolve
-server.module  = defaultConfig.module
+server.module = defaultConfig.module
 
 server.plugins = [
   new webpack.DefinePlugin({

@@ -9,7 +9,7 @@ let server = {}
 server.target = 'node'
 
 server.resolve = defaultConfig.resolve
-server.module  = defaultConfig.module
+server.module = defaultConfig.module
 
 server.plugins = [
   new webpack.DefinePlugin({
@@ -32,6 +32,6 @@ server.output = {
   devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
 },
 
-server.devtool = 'inline-cheap-module-source-map'
+  server.devtool = 'inline-cheap-module-source-map'
 
 module.exports = server
