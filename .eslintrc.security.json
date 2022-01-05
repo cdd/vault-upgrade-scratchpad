@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "_": true,
+    "$": true,
+    "CDD": true,
+    "EJSC": true,
+    "Pollers": true,
+    "balloon": true,
+    "d3": true,
+    "hideDialog": true,
+    "hideEditPanel": true,
+    "plotter": true,
+    "setupBigDataTable": true,
+    "showDialog": true,
+    "showEditPanel": true,
+    "process": true,
+    "updateTitleAndPageHeader": true
+  },
+  "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+  },
+  "plugins": [
+    "import",
+    "jquery-unsafe",
+    "jsx-a11y",
+    "no-unsafe-innerhtml",
+    "react",
+    "security",
+    "ignore-erb"
+  ],
+  "rules": {
+    "jquery-unsafe/no-after": 2,
+    "jquery-unsafe/no-append": 2,
+    "jquery-unsafe/no-appendTo": 2,
+    "jquery-unsafe/no-before": 2,
+    "jquery-unsafe/no-html": 2,
+    "jquery-unsafe/no-prepend": 2,
+    "jquery-unsafe/no-prependTo": 2,
+    "no-unsafe-innerhtml/no-unsafe-innerhtml" : 2,
+    "security/detect-unsafe-regex": 2,
+    "security/detect-non-literal-require": 2,
+    "security/detect-eval-with-expression": 2,
+    "security/detect-pseudoRandomBytes": 2,
+    "security/detect-possible-timing-attacks": 2,
+    "security/detect-no-csrf-before-method-override": 2,
+    "security/detect-buffer-noassert": 2,
+    "security/detect-child-process": 2,
+    "security/detect-disable-mustache-escape": 2,
+    "security/detect-new-buffer": 2,
+    "no-eval": 2,
+    "no-implied-eval": 2
+  }
+}

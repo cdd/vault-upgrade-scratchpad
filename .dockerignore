@@ -1,0 +1,10 @@
+.git
+*.log
+tmp/*
+log/*
+Makefile
+node_modules/
+node_modules/*
+tmux
+vendor/bundle/*
+Jenkinsfile

@@ -1,0 +1,80 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jquery": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "standard"
+  ],
+  "globals": {
+    "$": true,
+    "CDD": true,
+    "Pollers": true,
+    "Promise": true,
+    "_": true,
+    "module": true,
+    "process": true,
+    "chai": true,
+    "sinon": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "ignore-erb",
+    "import",
+    "jsx-a11y",
+    "mocha",
+    "react"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "react/forbid-dom-props": [
+      "error",
+      {
+        "forbid": [
+          "action",
+          "archive",
+          "background",
+          "cite",
+          "codebase",
+          "content",
+          "formaction",
+          "href",
+          "icon",
+          "longdesc",
+          "manifest",
+          "poster",
+          "profile",
+          "src",
+          "srcset",
+          "usemap"
+        ]
+      }
+    ],
+
+    "comma-dangle": ["error", "always-multiline"],
+    "no-nested-ternary": "error",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+
+    "camelcase": "off",
+    "no-extend-native": ["error", { "exceptions": ["String"] }],
+    "no-return-assign": "off",
+    "one-var": "off",
+    "eqeqeq": "off",
+    "object-curly-spacing": ["error", "always", {
+      "arraysInObjects": true,
+      "objectsInObjects": true
+    }]
+  }
+}

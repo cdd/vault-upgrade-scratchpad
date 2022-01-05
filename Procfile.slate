@@ -1,0 +1,2 @@
+webpack-server: yarn build:server --watch
+slate-dev-server: script/slate-dev-server

@@ -1,0 +1,21 @@
+FROM ruby:2.7.5
+RUN apt-get update -qq && apt-get install -y fwknop-client
+RUN gem install bundler -v '~>2'
+
+RUN mkdir -p /cdd/ruby
+WORKDIR /cdd/ruby
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --with deploy --without default test development production selenium
+
+COPY lib/capistrano lib/capistrano
+
+RUN mkdir -p config
+COPY config/deploy.rb config/deploy.rb
+COPY config/deploy config/deploy
+
+COPY Capfile .
+
+COPY cap_shell_setup.sh .
+
+CMD cap qa deploy

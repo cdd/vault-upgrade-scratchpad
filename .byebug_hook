@@ -1,0 +1,1 @@
+RSpec.configure { |config| config.fuubar_auto_refresh = false } if RSpec

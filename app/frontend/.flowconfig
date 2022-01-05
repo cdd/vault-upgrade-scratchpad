@@ -1,0 +1,9 @@
+[include]
+../../node_modules
+
+[ignore]
+.*flow
+
+[options]
+module.name_mapper='@' -> '<PROJECT_ROOT>'
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe

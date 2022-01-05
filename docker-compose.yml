@@ -1,0 +1,47 @@
+# This will set everything up - but the server will fail because there is no
+# database in place.  All the rake commands will do the expected things, though.
+
+# Oh - and you have to have done 'make chemaxon' before this will work because compose can't reference a parent directory.
+
+# docker-compose up
+# docker-compose run server rake db:fresh
+# Maybe also need to docker-compose run server yarn build
+# docker-compose down
+version: '3'
+services:
+  server:
+    build: .
+    command: rails s -b 0.0.0.0
+    environment:
+      - MYSQL_HOST=percona
+      - MYSQL_PRODUCTION_PASSWORD=password
+      - SLATE_URL=http://slate:5000
+      - WEBPACKER_DEV_SERVER_HOST=cdd_node
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      - selenium
+      - slate
+      - chemaxon
+      - elasticsearch
+      - percona
+      - cdd_node
+  selenium:
+    image: "selenium/standalone-chrome"
+  slate:
+    build: .
+    command:  node --max-old-space-size=2048 script/slate-server.js
+  chemaxon:
+    image: chemaxon
+  elasticsearch:
+    image: collaborativedrug/elasticsearch:7.11.1
+  percona:
+    image: percona
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - ./config/percona/conf.d:/etc/my.cnf.d
+  cdd_node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node

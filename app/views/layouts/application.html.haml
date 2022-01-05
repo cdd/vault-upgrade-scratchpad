@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title
+      = yield :title
+      \- Rails+React test build
+    %meta{ 'http-equiv' => 'Content-Type', :content => "text/html; charset=UTF-8"}/
+    %meta{ 'http-equiv' => 'Content-Language', :content => "en-us"}/
+    %meta{ 'http-equiv' => 'X-UA-Compatible', :content => "IE=edge" }/
+    %link{ :href => "/favicon.png", :rel => "shortcut icon", :type => "image/icon" }
+
+    = javascript_pack_tag "commons"
+    = javascript_pack_tag "javascripts/application"
+    = stylesheet_pack_tag "styles/application"
+    = csrf_meta_tag
+    = yield :head
+
+  %body
+    %p
+      = link_to "/" do
+        Home
+
+    %p
+      = link_to "/utility" do
+        Utility page (separate pack)
+
+    %p
+      = link_to "/frontend/specs" do
+        Unit tests
+
+    = react_component "test_react_component"
+
+    %h3
+      #structureless
+        = image_tag(ImagesHelper.structureless_image_path('nostructure.jpg'))

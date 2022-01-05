@@ -1,0 +1,12 @@
+When running docker under Linux, files created on a mounted volume from within the container are owned by root.
+Instead, the owner should be mapped to the current user (which seems to happen automatically on OS X).
+
+To fix this, follow the instructions in the link below and create the file /etc/docker/daemon.json with:
+
+{
+  "userns-remap": "default"
+}
+
+You will need to purge docker containers and restart docker for this to take effect.
+
+https://dreamlab.net/en/blog/post/user-namespace-remapping-an-advanced-feature-to-protect-your-docker-environments/

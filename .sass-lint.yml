@@ -1,0 +1,51 @@
+options:
+  merge-default-rules: false
+  max-warnings: 500
+
+files:
+  include:
+    - 'app/assets/stylesheets/application.sass'
+    - 'app/assets/stylesheets/hacks.sass'
+    - 'app/assets/stylesheets/base/*.sass'
+    - 'app/assets/stylesheets/components/*.sass'
+    - 'app/assets/stylesheets/layout/*.sass'
+    - 'app/assets/stylesheets/partials/*.sass'
+    - 'app/assets/stylesheets/partials/eln/*.sass'
+    - 'app/assets/stylesheets/vendor/jquery/*.sass'
+    - 'app/assets/stylesheets/vendor/material/*.sass'
+  ignore:
+    - 'app/assets/stylesheets/print/*.sass'
+
+rules:
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 2
+  no-color-literals: 2
+  mixins-before-declarations:
+    - 2
+    -
+      exclude:
+        - breakpoint
+        - mq
+
+  no-warn: 1
+  no-debug: 1
+  no-ids: 0 # change to 2 at the end of refactor
+  no-important: 0 # Change to 2 at the end of refactor
+  hex-notation:
+    - 2
+    -
+      style: uppercase
+  indentation:
+    - 2
+    -
+      size: 2
+  property-sort-order:
+    - 1
+    -
+      order:
+        - display
+        - margin
+      ignore-custom-properties: true
+  variable-for-property:
+    - 2
