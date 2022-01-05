@@ -3,8 +3,6 @@ const sharedTest = require('./sharedTest')
 var path = require('path')
 var output_dir = path.join(__dirname, '..', '..', 'public', 'packs-test')
 
-console.log(environment.plugins.get('Manifest'));
-
 environment.plugins.get('Manifest').options.writeToFileEmit = false
 
 environment.config.output = {
