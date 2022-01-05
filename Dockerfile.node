@@ -12,7 +12,7 @@ COPY babel.config.js .
 
 RUN yarn install
 
-COPY public/ public/
+# COPY public/ public/
 COPY config/webpacker.yml ./config/
 COPY config/webpack/* ./config/webpack/
 COPY config/karma.config.js ./config/

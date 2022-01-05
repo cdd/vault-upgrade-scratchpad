@@ -101,7 +101,6 @@ environment.config.module = {
  * now deprecated. Perhaps we can address this problem in a simpler way and remove this hack.
  */
 
- console.log('hey, using InjectPlugin')
 environment.plugins.append(
   'InjectPlugin',
   new InjectPlugin(function () {

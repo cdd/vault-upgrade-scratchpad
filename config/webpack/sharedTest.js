@@ -1,10 +1,12 @@
 const path = require('path')
 
 const apply = config => {
-  // this currently breaks things:
   const specIndex = path.join(__dirname, '../../spec/frontend/index.js')
   console.log('specIndex = ' + specIndex)
-  config.entry.set('specs', specIndex)
+
+
+  // this currently breaks things (sometimes????)
+   config.entry.set('specs', specIndex)
 
   // this appears to be unnecessary as of webpack 3
   // config.loaders.append('json', {
