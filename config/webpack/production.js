@@ -1,14 +1,19 @@
 const environment = require('./environment')
-var webpack = require('webpack');
-var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const webpack = require('webpack');
 
-environment.plugins.append(
-  'CommonsChunkCommons',
-  new CommonsChunkPlugin({
-    name: 'commons',
-    minChunks: 2
-  })
-)
+environment.config.merge({
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "commons",
+          chunks: "all"
+        }
+      }
+    },
+  },
+});
 
 environment.plugins.append(
   'OccurrenceOrderPlugin',

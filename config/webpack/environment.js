@@ -1,11 +1,30 @@
-const { environment } = require('@rails/webpacker')
-var path = require('path')
-var webpack = require('webpack')
-var CleanWebpackPlugin = require('clean-webpack-plugin')
-var output_dir = path.join(__dirname, '..', '..', 'public', 'packs')
+const { environment, config } = require('@rails/webpacker')
+const { join } = require('path')
+const path = require('path')
+const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const InjectPlugin = require('webpack-inject-plugin').default
+const output_dir = path.join(__dirname, '..', '..', 'public', 'packs')
 
-// eslint-disable-next-line no-console
-console.log('webpack environment (NODE_ENV): ' + process.env.NODE_ENV)
+// using the solution from https://github.com/rails/webpacker/issues/url to get assets emitted
+// with the default webpacker 3 path names for compatibility.
+const fileLoader = environment.loaders.get('file')
+fileLoader.use[0].options.name = '[path][name]-[hash].[ext]'
+fileLoader.use[0].options.context = join(config.source_path)
+
+environment.config.merge({
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "commons",
+          chunks: "all"
+        }
+      }
+    },
+  },
+});
 
 environment.plugins.prepend(
   'CleanWebpackPlugin',
@@ -44,39 +63,51 @@ environment.plugins.prepend(
   })
 )
 
-environment.config.resolve = {
-  alias: {
-    '@': path.join(__dirname, '../../app/frontend'),
-    'ASSETS': path.join(__dirname, '../../app/assets'),
-    'LIB': path.join(__dirname, '../../lib/eln'),
-    '#': path.resolve(__dirname, '../../spec/frontend'),
-    'SPECS': path.resolve(__dirname, '../../spec/frontend'),
-    'STOICH': path.resolve(__dirname, '../../app/frontend/Eln/Entry/components/Editor/Structure/StoichiometryTable'),
-  },
-  modules: [
-    path.join('./node_modules'),
-  ],
-  symlinks: false,
-}
+environment.config.merge({
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, '../../app/frontend'),
+      'ASSETS': path.join(__dirname, '../../app/assets'),
+      'LIB': path.join(__dirname, '../../lib/eln'),
+      '#': path.resolve(__dirname, '../../spec/frontend'),
+      'SPECS': path.resolve(__dirname, '../../spec/frontend'),
+      'STOICH': path.resolve(__dirname, '../../app/frontend/Eln/Entry/components/Editor/Structure/StoichiometryTable'),
+    },
+    modules: [
+      path.join('./node_modules'),
+    ],
+    symlinks: false,
+  }
+});
 
 environment.config.module = {
   rules: [
     {
-      test: require.resolve('jquery'),
-      use: [{
-        loader: 'expose-loader',
-        options: '$',
-      }, {
-        loader: 'expose-loader',
-        options: 'jQuery',
-      }],
-    },
-    {
       test: /constants\.js\.erb$/,
       enforce: 'pre',
       loader: 'rails-erb-loader',
-    },
+    }
   ],
 }
+
+/**
+ * Scott's egregious hack to inject some code into every pack.
+ *
+ * This is terrible, as is the problem it's intended to solve, which is that packs that reference
+ * jQuery seem to cause $ to be overwritten with a fresh object that doesn't have our augmentation
+ * ($.browser, etc).
+ *
+ * For whatever reason, this problem didn't occur with webpack 3's CommonsChunkCommons, but that is
+ * now deprecated. Perhaps we can address this problem in a simpler way and remove this hack.
+ */
+
+ console.log('hey, using InjectPlugin')
+environment.plugins.append(
+  'InjectPlugin',
+  new InjectPlugin(function () {
+    return "require('" + path.resolve(path.join(__dirname,
+      '../../app/assets/javascripts/global_pack_inject.js')) + "')"
+  })
+);
 
 module.exports = environment

@@ -8,7 +8,7 @@ RUN mkdir -p /tmp/src
 WORKDIR /tmp/src
 
 COPY package.json yarn.lock .postcssrc.yml ./
-COPY .babelrc .
+COPY babel.config.js .
 
 RUN yarn install
 

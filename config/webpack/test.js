@@ -3,9 +3,9 @@ const sharedTest = require('./sharedTest')
 var path = require('path')
 var output_dir = path.join(__dirname, '..', '..', 'public', 'packs-test')
 
-environment.plugins.get('Manifest').opts.writeToFileEmit = false
-// eslint-disable-next-line no-console
-console.log(output_dir)
+console.log(environment.plugins.get('Manifest'));
+
+environment.plugins.get('Manifest').options.writeToFileEmit = false
 
 environment.config.output = {
   // must match config.webpack.output_dir

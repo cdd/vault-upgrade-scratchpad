@@ -8,7 +8,8 @@ if Rails.env.development?
 
       require "webpacker/version" # OMG - they don't require it in the gem so we have to
       raise "revisit this hack" if Gem::Version.new(Rails.version) >= (Gem::Version.new("5.3"))
-      raise "get rid of this hack" if Gem::Version.new(Webpacker::VERSION) > (Gem::Version.new("3.3.1"))
+      # raise "get rid of this hack" if Gem::Version.new(Webpacker::VERSION) > (Gem::Version.new("3.3.1"))
+      # TODO: investigate
 
       def perform_request(env)
         if env["PATH_INFO"].start_with?("/#{public_output_uri_path}") && Webpacker.dev_server.running?
