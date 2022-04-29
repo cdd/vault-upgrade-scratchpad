@@ -15,8 +15,11 @@ services:
     environment:
       - MYSQL_HOST=percona
       - MYSQL_PRODUCTION_PASSWORD=password
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - CHEMAXON_HOST_AND_PORT=chemaxon:8100
+      - CHEMAXON_BASE=http://chemaxon:8100/cdd
       - SLATE_URL=http://slate:5000
-      - WEBPACKER_DEV_SERVER_HOST=cdd_node
+      - WEBPACKER_DEV_SERVER_HOST=cdd-node
     ports:
       - 127.0.0.1:3000:3000
     depends_on:
@@ -25,23 +28,23 @@ services:
       - chemaxon
       - elasticsearch
       - percona
-      - cdd_node
+      - cdd-node
   selenium:
-    image: "selenium/standalone-chrome"
+    image: 'selenium/standalone-chrome'
   slate:
     build: .
-    command:  node --max-old-space-size=2048 script/slate-server.js
+    command: node --max-old-space-size=2048 script/slate-server.js
   chemaxon:
     image: chemaxon
   elasticsearch:
-    image: collaborativedrug/elasticsearch:7.11.1
+    image: collaborativedrug/elasticsearch:7.16.2
   percona:
     image: percona
     environment:
       - MYSQL_ROOT_PASSWORD=password
     volumes:
       - ./config/percona/conf.d:/etc/my.cnf.d
-  cdd_node:
+  cdd-node:
     build:
       context: .
       dockerfile: Dockerfile.node

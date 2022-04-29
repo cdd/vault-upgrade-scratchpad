@@ -131,7 +131,7 @@
     "immutable": "^3.8.1",
     "is-url": "^1.2.2",
     "jayson": "^2.0.6",
-    "jquery": "git://github.com/cdd/jquery.git#9446d55efa5d2e90c4acf0c429b9c37e2c01783c",
+    "jquery": "3.6.0",
     "jquery-browser-plugin": "^0.0.6",
     "jquery-ui-bundle": "^1.12.1-migrate",
     "jquery-ujs": "^1.2.2",

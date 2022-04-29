@@ -1,27 +1,26 @@
-FROM node:14
+FROM node:14 as development
 
 EXPOSE 3035
+EXPOSE 9001
 ENV NODE_ENV=development
 ENV DOCKER_CONTAINER=true
 
 RUN mkdir -p /tmp/src
 WORKDIR /tmp/src
 
+FROM development as ci
 COPY package.json yarn.lock .postcssrc.yml ./
 COPY babel.config.js .
-
+COPY .eslint* ./
 RUN yarn install
-
-# COPY public/ public/
+CMD yarn jstart
+COPY public/ public/
 COPY config/webpacker.yml ./config/
-COPY config/webpack/* ./config/webpack/
+COPY config/webpack/ ./config/webpack/
 COPY config/karma.config.js ./config/
-
-# COPY app/javascripts/ app/javascripts
+COPY app/javascripts/ app/javascripts
 COPY app/frontend/ app/frontend
 COPY app/assets/ app/assets
-# COPY lib/eln/ lib/eln
+COPY lib/eln/ lib/eln
 COPY spec/frontend spec/frontend
-# COPY spec/lib/eln spec/lib/eln
-
-CMD yarn jstart
+COPY spec/lib/eln spec/lib/eln

@@ -1,39 +1,24 @@
-FROM ruby:2.7.5 as development
+FROM public.ecr.aws/docker/library/ruby:2.7.6 as development
+# FROM public.ecr.aws/docker/library/ruby:${RUBY_VERSION} as development
 ENV TZ=UTC
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev \
-  libmagic-dev default-jdk wget unzip direnv
-
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt install -y nodejs python2
-RUN npm install -g yarn
-
-WORKDIR /tmp
-# headers to pretend we're a browser, if this breaks again, just add the zip to our repo
-# RUN curl -O https://www.inchi-trust.org/download/105/INCHI-1-SRC.zip
-# RUN unzip INCHI-1-SRC.zip
-# WORKDIR /tmp/INCHI-1-SRC/INCHI_EXE/inchi-1/gcc
-# RUN make -j 4
-# RUN mv ../../bin/Linux/inchi-1 /usr/local/bin/inchi
+  libmagic-dev default-jdk unzip direnv
 
 # So we know we're in a container - useful for testing (selenium remote, etc)
 ENV DOCKER_CONTAINER=true
 
 ENV JAVA_HOME=/usr/lib/jvm/default-java
 # HACK https://github.com/arton/rjb/issues/70
-RUN mkdir -p /usr/lib/jvm/default-java/jre/lib/amd64 /usr/lib/jvm/default-java/jre/lib/aarch64
-RUN ln -s /usr/lib/jvm/default-java/lib/server /usr/lib/jvm/default-java/jre/lib/amd64/server
-RUN ln -s /usr/lib/jvm/default-java/lib/server /usr/lib/jvm/default-java/jre/lib/aarch64/server
+RUN mkdir -p /usr/lib/jvm/default-java/jre/lib/amd64 /usr/lib/jvm/default-java/jre/lib/aarch64 && \
+  ln -s /usr/lib/jvm/default-java/lib/server /usr/lib/jvm/default-java/jre/lib/amd64/server && \
+  ln -s /usr/lib/jvm/default-java/lib/server /usr/lib/jvm/default-java/jre/lib/aarch64/server
 
 RUN groupadd -r -g 1000 cdd && useradd -u 1000 -r -g  cdd cdd
-# User home
-RUN mkdir /home/cdd
-RUN chown cdd.cdd /home/cdd
-# App home
-RUN mkdir /cdd
-RUN chown cdd.cdd /cdd
+
+RUN mkdir -p /home/cdd /cdd && chown cdd.cdd /home/cdd /cdd
 
 # END ROOT TASKS
 
@@ -63,25 +48,37 @@ ENV RSPEC_RETRY_RETRY_COUNT=0
 # For selenium
 ENV HEADLESS=true
 
-RUN mkdir -p /cdd/ruby
-WORKDIR /cdd/ruby
-RUN mkdir -p tmp/pids
-RUN bundle config JOBS 6
+RUN mkdir -p /cdd
+WORKDIR /cdd
 COPY --chown=cdd:cdd Gemfile* ./
-RUN bundle pack --all
+RUN bundle config --global jobs 6 && bundle config set cache_all true && bundle cache
 
-COPY --chown=cdd:cdd package.json yarn.lock ./
+WORKDIR /tmp/src
 
-COPY --chown=cdd:cdd . .
+CMD bash -c "rm -rf tmp/pids/* ; rails s -b 0.0.0.0"
 
-RUN rm -rf tmp/pids/*
-
-CMD rails s -b 0.0.0.0
-
-FROM development as ci
-
-RUN yarn && yarn build
+##################################################################################################################################
+FROM development as external-resources-testing
 USER root
-RUN apt-get update && apt-get install -y default-mysql-client
-# default-mysql-client added so we can load the performance data
+RUN apt-get install -y chromium xvfb
 USER cdd
+WORKDIR /cdd
+COPY --chown=cdd:cdd . .
+CMD ./bin/rake spec:external_resources
+
+##################################################################################################################################
+FROM development as ci
+USER root
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt install -y nodejs python2 && npm install -g yarn
+
+# No need to update it was done by the node script
+RUN apt-get install -y default-mysql-client
+USER cdd
+WORKDIR /cdd
+COPY --chown=cdd:cdd package.json yarn.lock ./
+COPY --chown=cdd:cdd bin/ ./bin
+COPY --chown=cdd:cdd vendor/open_descriptors/ ./vendor/open_descriptors
+RUN yarn
+COPY --chown=cdd:cdd . .
+RUN yarn build

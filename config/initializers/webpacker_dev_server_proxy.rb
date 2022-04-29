@@ -7,7 +7,7 @@ if Rails.env.development?
       # update anything else.
 
       require "webpacker/version" # OMG - they don't require it in the gem so we have to
-      raise "revisit this hack" if Gem::Version.new(Rails.version) >= (Gem::Version.new("5.3"))
+      # raise "revisit this hack" if Gem::Version.new(Rails.version) >= (Gem::Version.new("5.3"))
       # raise "get rid of this hack" if Gem::Version.new(Webpacker::VERSION) > (Gem::Version.new("3.3.1"))
       # TODO: investigate
 
