@@ -36,7 +36,6 @@ module.exports = function (api) {
           corejs: 3,
           modules: false,
           exclude: ['transform-typeof-symbol'],
-          loose: false
         }
       ],
       '@babel/preset-flow',
@@ -46,54 +45,55 @@ module.exports = function (api) {
           development: isDevelopmentEnv || isTestEnv,
           useBuiltIns: true
         },
-      ]
+      ],
+      ['@babel/preset-typescript', { 'allExtensions': true, 'isTSX': true }]
     ].filter(Boolean),
     plugins: [
-      'babel-plugin-macros', // I don't know if this is necessary
-      '@babel/plugin-syntax-dynamic-import',
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      isTestEnv && 'babel-plugin-dynamic-import-node',
-      '@babel/plugin-transform-destructuring',
-      [
-        '@babel/plugin-proposal-class-properties',
-        {
-          loose: false
-        }
-      ],
-      [
-        '@babel/plugin-proposal-object-rest-spread',
-        {
-          useBuiltIns: true
-        }
-      ],
-      [
-        '@babel/plugin-transform-runtime',
-        {
-          helpers: false,
-          regenerator: true,
-          corejs: false
-        }
-      ],
-      [
-        '@babel/plugin-transform-regenerator',
-        {
-          async: false
-        }
-      ],
-      isProductionEnv && [
-        'babel-plugin-transform-react-remove-prop-types',
-        {
-          removeImport: true
-        }
-      ],
-      "@babel/plugin-proposal-export-default-from",
-      "@babel/plugin-proposal-export-namespace-from",
-      "@babel/plugin-proposal-throw-expressions",
+      // 'babel-plugin-macros', // I don't know if this is necessary
+      // '@babel/plugin-syntax-dynamic-import',
+      // [
+      //   "@babel/plugin-proposal-decorators",
+      //   {
+      //     "legacy": true
+      //   }
+      // ],
+      // isTestEnv && 'babel-plugin-dynamic-import-node',
+      // '@babel/plugin-transform-destructuring',
+      // [
+      //   '@babel/plugin-proposal-class-properties',
+      //   {
+      //     loose: false
+      //   }
+      // ],
+      // [
+      //   '@babel/plugin-proposal-object-rest-spread',
+      //   {
+      //     useBuiltIns: true
+      //   }
+      // ],
+      // [
+      //   '@babel/plugin-transform-runtime',
+      //   {
+      //     helpers: false,
+      //     regenerator: true,
+      //     corejs: false
+      //   }
+      // ],
+      // [
+      //   '@babel/plugin-transform-regenerator',
+      //   {
+      //     async: false
+      //   }
+      // ],
+      // isProductionEnv && [
+      //   'babel-plugin-transform-react-remove-prop-types',
+      //   {
+      //     removeImport: true
+      //   }
+      // ],
+      // "@babel/plugin-proposal-export-default-from",
+      // "@babel/plugin-proposal-export-namespace-from",
+      // "@babel/plugin-proposal-throw-expressions",
     ].filter(Boolean)
   }
 }

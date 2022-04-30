@@ -101,12 +101,12 @@ environment.config.module = {
  * now deprecated. Perhaps we can address this problem in a simpler way and remove this hack.
  */
 
-environment.plugins.append(
-  'InjectPlugin',
-  new InjectPlugin(function () {
-    return "require('" + path.resolve(path.join(__dirname,
-      '../../app/assets/javascripts/global_pack_inject.js')) + "')"
-  })
-);
+// environment.plugins.append(
+//   'InjectPlugin',
+//   new InjectPlugin(function () {
+//     return "require('" + path.resolve(path.join(__dirname,
+//       '../../app/assets/javascripts/global_pack_inject.js')) + "')"
+//   })
+// );
 
 module.exports = environment

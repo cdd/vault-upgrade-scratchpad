@@ -5,10 +5,12 @@ import chaiEnzyme from 'chai-enzyme'
 import chaiJquery from 'chai-jquery'
 // import './support/chai_ext'
 
+// debugger
+
 import Enzyme from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
-require('babel-polyfill')
+// require('babel-polyfill')
 // require('#/support/stringExtensions.js')
 require('@/../assets/javascripts/jquery.js')
 // require('@/../assets/javascripts/ejschart/EJSChart.js')

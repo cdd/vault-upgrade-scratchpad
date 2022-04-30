@@ -4,6 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TestReactComponent from '@/TestReactComponent';
 
+debugger
 describe("TestReactComponent", () => {
   it("should render my component", () => {
 
