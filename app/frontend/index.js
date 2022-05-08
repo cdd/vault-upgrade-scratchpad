@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM, {render} from 'react-dom'
 import TestReactComponent from './TestReactComponent'
+import TestReactComponentTS from './TestReactComponentTS/TestReactComponentTS.tsx'
 
 
 require.context('../assets/images/structureless/')
@@ -18,6 +19,7 @@ _.merge(window.Globals, {
   Component: {
     Class: {
       TestReactComponent,
+      TestReactComponentTS,
     },
     Instance: {},
   },

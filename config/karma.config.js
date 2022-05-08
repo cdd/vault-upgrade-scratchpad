@@ -14,11 +14,11 @@ let plugins = [
 ]
 
 var hostname = 'localhost'
-let port = 9876
+let port = 9877
 let browsers
 if (process.env.DOCKER_CONTAINER === 'true') {
   browsers = ['CI_Chrome']
-  hostname = 'node.test'
+  hostname = 'scratch-node.test'
 } else if (process.env.NODE_ENV === 'test' || process.env.HEADLESS === 'true') {
   browsers = ['ChromeHeadlessNoSandbox']
 } else {

@@ -51,12 +51,12 @@ module.exports = function (api) {
     plugins: [
       // 'babel-plugin-macros', // I don't know if this is necessary
       // '@babel/plugin-syntax-dynamic-import',
-      // [
-      //   "@babel/plugin-proposal-decorators",
-      //   {
-      //     "legacy": true
-      //   }
-      // ],
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
       // isTestEnv && 'babel-plugin-dynamic-import-node',
       // '@babel/plugin-transform-destructuring',
       // [

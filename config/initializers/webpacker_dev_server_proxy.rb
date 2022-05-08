@@ -18,7 +18,7 @@ if Rails.env.development?
           # env["HTTP_HOST"] = env["HTTP_X_FORWARDED_HOST"] = env["HTTP_X_FORWARDED_SERVER"] = Webpacker.dev_server.host_with_port
           host, port = Webpacker.dev_server.host_with_port.split(":")
           env["HTTP_HOST"] = env["HTTP_X_FORWARDED_HOST"] = env["HTTP_X_FORWARDED_SERVER"] = host
-          env["HTTP_PORT"] = env["HTTP_X_FORWARDED_PORT"] = env["HTTP_X_FORWARDED_SERVER"] = port || "3035"
+          env["HTTP_PORT"] = env["HTTP_X_FORWARDED_PORT"] = env["HTTP_X_FORWARDED_SERVER"] = port || "3036"
           env["HTTP_X_FORWARDED_HOST_AND_PORT"] = "#{host}:#{port}"
           # END CHANGES
 

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es2019", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "jsx": "react",
+    "types": [
+      "mocha",
+      "chai"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/frontend/*"],
+      "ASSETS/*": ["app/assets/*"],
+      "LIB/*": ["lib/eln/*"],
+      "SPECS/*": ["spec/frontend/*"],
+      "STOICH/*": ["app/frontend/Eln/Entry/components/Editor/Structure/StoichiometryTable/*"]
+    }  
+  },
+  "exclude": [
+    "node_modules",
+    "vendor",
+    "public"
+  ],
+  "include": [
+    "./app"
+  ],
+  "compileOnSave": false
+}

@@ -33,7 +33,7 @@ ENVS=-e MYSQL_HOST=$(MYSQL_HOST) \
 	-e CHEMAXON_BASE=http://chemaxon:8100/cdd \
 	-e SLATE_URL=http://slate:5000 \
 	-e WEBPACKER_DEV_SERVER_HOST=$(JS_PACKAGE_NAME) \
-	-e WEBPACKER_DEV_SERVER_PORT=3035 \
+	-e WEBPACKER_DEV_SERVER_PORT=3036 \
 	-e NEW_LOGGING=$(NEW_LOGGING) \
 	-e SAML_ISSUER=http://localhost:3000/ \
 	-e SAML_ASSERTION_CONSUMER_SERVICE_URL=http://localhost:3000/user/saml_authentication \
@@ -78,9 +78,9 @@ endif
 # We set the workdir so that things behave the same for CI build images
 WORKDIR=--workdir /tmp/src
 
-JS_PACKAGE_NAME=cdd-node
-# node.test is the name of the server expected by config/karma.config.js
-JS_TESTING_NAME=node.test
+JS_PACKAGE_NAME=scratch-node
+# scratch-node.test is the name of the server expected by config/karma.config.js
+JS_TESTING_NAME=scratch-node.test
 
 yarn_run = docker run --rm $(1)\
 	$(VOLUMES) $(LOCAL_NODE_VOLUME) $(WORKDIR) \
@@ -88,7 +88,7 @@ yarn_run = docker run --rm $(1)\
 	-e NODE_ENV=development \
 	-e WEBPACKER_DEV_SERVER_HOST=0.0.0.0 \
 	$(JS_PACKAGE_NAME)
-yarn_dev = $(call yarn_run, $(1) -e VIRTUAL_HOST=cdd-node.127.0.0.1.nip.io -p 127.0.0.1:3035:3035 --name $(JS_PACKAGE_NAME))
+yarn_dev = $(call yarn_run, $(1) -e VIRTUAL_HOST=scratch-node.127.0.0.1.nip.io -p 127.0.0.1:3036:3036 --name $(JS_PACKAGE_NAME))
 yarn_test = $(call yarn_run, $(1) --name $(JS_TESTING_NAME))
 
 -include $(dir $(lastword $(MAKEFILE_LIST)))/Makefile.common
@@ -99,24 +99,24 @@ yarndev_image:
 
 $(JS_PACKAGE_NAME): network yarndev
 
-stop_cdd-node:
+stop_scratch-node:
 	docker stop $(JS_PACKAGE_NAME) || true
 
 stop_cdd:
 	docker stop cdd || true
 
-kill_cdd-node: stop_cdd-node
+kill_scratch-node: stop_scratch-node
 kill_cdd: stop_cdd
 
-yarndev: yarndev_image stop_cdd-node network
+yarndev: yarndev_image stop_scratch-node network
 	$(call yarn_dev, -it) yarn install
 	$(MAKE) sync_node_modules
-	$(call yarn_dev, -p 127.0.0.1:9001:9001 -d) yarn jstart-with-storybook
+	$(call yarn_dev, -p 127.0.0.1:9002:9002 -d) yarn jstart-with-storybook
 
 node_shell: cdd_node_interactive
 
-cdd_node_interactive: yarndev_image stop_cdd-node
-	$(call yarn_dev, -p 127.0.0.1:9001:9001 -it) bash
+cdd_node_interactive: yarndev_image stop_scratch-node
+	$(call yarn_dev, -p 127.0.0.1:9002:9002 -it) bash
 
 yarndev_running:
 	(docker ps -f name=$(JS_PACKAGE_NAME) | grep $(JS_PACKAGE_NAME)) || $(MAKE) yarndev
@@ -211,7 +211,7 @@ ifeq ($(NEW_LOGGING), true)
 endif
 	docker run --rm -it --name cdd $(NETWORK) $(VOLUMES) $(WORKDIR) $(PORTS) $(ENVS) -e I18N_DEBUG=true -e WEBPACKER_DEV_SERVER_HOST=$(JS_PACKAGE_NAME) -e WEB_BINDING=0.0.0.0 $(PACKAGE_NAME)
 
-safe_server: stop_cdd stop_cdd-node server ## Stops cdd_node and cdd, then run server, forcing everything to be up to date.
+safe_server: stop_cdd stop_scratch-node server ## Stops cdd_node and cdd, then run server, forcing everything to be up to date.
 
 # This is the *development* environment, but pointing at the *test* database
 test_server: yarndev_running image clear percona elasticsearch network
@@ -219,7 +219,7 @@ test_server: yarndev_running image clear percona elasticsearch network
 
 # This is the development environment pointing at the test db and running behind nginx.
 # It is useful for testing the SSO machinery locally
-selenium_server: stop_cdd-node nginx_proxy clear percona elasticsearch network saml-idp-server
+selenium_server: stop_scratch-node nginx_proxy clear percona elasticsearch network saml-idp-server
 	docker stop cdd || true
 	docker run -e DATABASE_URL=mysql2://percona/cdd_test --rm -d --name cdd $(NETWORK) $(VOLUMES) $(WORKDIR) $(ENVS) $(SAML_ENVS) $(PORTS) -e VIRTUAL_HOST=cdd.127.0.0.1.nip.io -e RAILS_ENV=selenium $(PACKAGE_NAME) bash -c '(rm -rf ./public/packs/*; rails webpacker:compile &); rails s -b 0.0.0.0'
 	@echo
@@ -337,7 +337,7 @@ snapgene_stop: ## Stop the snapgene webservices server
 microservices: chemaxon slate web2pdf thumbnailer marvinjs snapgene ## Runs services needed by parts of Vault
 
 js_testing: yarndev_image selenium_running ## Runs js browser tests
-	$(call yarn_test, -it -p 127.0.0.1:9876:9876 -e HEADLESS=true -e NODE_ENV=test) yarn watch:test:browser
+	$(call yarn_test, -it -p 127.0.0.1:9877:9877 -e HEADLESS=true -e NODE_ENV=test) yarn watch:test:browser
 
 js_testing_node: yarndev_image ## Runs js node tests
 	$(call yarn_test, -it -p 127.0.0.1:9229:9229 -e NODE_ENV=test) yarn watch:test:node
@@ -531,7 +531,7 @@ node_setup: yarndev_image
 	docker run --rm -it $(NETWORK) $(VOLUMES) $(WORKDIR) $(ENVS) $(JS_PACKAGE_NAME) bash -c 'yarn --force'
 
 stop: stop_selenium stop_logging marvinjs_stop ## Stop the background processes we tend to start
-	docker stop cdd cdd-node chemaxon elasticsearch guard ide percona slate web2pdf thumbnailer || true
+	docker stop cdd scratch-node chemaxon elasticsearch guard ide percona slate web2pdf thumbnailer || true
 
 setup: save_settings image network percona elasticsearch db_setup node_setup ## Run this before any Vault related tasks
 	@echo 'Now you can:'
