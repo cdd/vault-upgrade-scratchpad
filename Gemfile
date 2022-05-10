@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem "webpacker", "~> 5.4.0" # React, etc.
+gem "react_on_rails", "13.0.0"
 gem "haml"
 
 group :development, :test, :selenium do
@@ -75,3 +75,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "shakapacker", "6.2.1"

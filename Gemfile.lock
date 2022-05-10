@@ -94,6 +94,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     erubi (1.10.0)
     execjs (2.8.1)
@@ -110,7 +111,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    libv8-node (16.10.0.0-aarch64-linux)
+    libv8-node (16.10.0.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -180,10 +181,17 @@ GEM
       method_source
       rake (>= 12.2)
       thor (~> 1.0)
+    rainbow (3.1.1)
     rake (13.0.6)
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    react_on_rails (13.0.0)
+      addressable
+      connection_pool
+      execjs (~> 2.5)
+      rails (>= 5.2)
+      rainbow (~> 3.0)
     regexp_parser (2.2.0)
     rexml (3.2.5)
     ruby_dep (1.5.0)
@@ -204,6 +212,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
+    shakapacker (6.2.1)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -233,11 +246,6 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webpacker (5.4.3)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -270,8 +278,10 @@ DEPENDENCIES
   rack-proxy
   rails (~> 6.0)
   rails-controller-testing
+  react_on_rails (= 13.0.0)
   sass-rails (~> 5.0)
   selenium-webdriver
+  shakapacker (= 6.2.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
@@ -280,7 +290,6 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
-  webpacker (~> 5.4.0)
 
 RUBY VERSION
    ruby 2.7.6

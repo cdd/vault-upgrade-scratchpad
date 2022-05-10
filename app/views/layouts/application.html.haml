@@ -9,9 +9,12 @@
     %meta{ 'http-equiv' => 'X-UA-Compatible', :content => "IE=edge" }/
     %link{ :href => "/favicon.png", :rel => "shortcut icon", :type => "image/icon" }
 
-    = javascript_pack_tag "commons"
-    = javascript_pack_tag "javascripts/application"
-    = stylesheet_pack_tag "styles/application"
+    -# = javascript_pack_tag "commons"
+    -# = javascript_pack_tag "javascripts/application"
+    -# = stylesheet_pack_tag "styles/application"
+    = javascript_pack_tag "application"
+    -# = javascript_pack_tag "hello-world-bundle"
+    -# = stylesheet_pack_tag "styles/application"
     = csrf_meta_tag
     = yield :head
 
@@ -20,17 +23,29 @@
       = link_to "/" do
         Home
 
-    %p
-      = link_to "/utility" do
-        Utility page (separate pack)
+    -# %p
+    -#   = link_to "/utility" do
+    -#     Utility page (separate pack)
 
-    %p
-      = link_to "/frontend/specs" do
-        Unit tests
+    -# %p
+    -#   = link_to "/frontend/specs" do
+    -#     Unit tests
 
-    = react_component "TestReactComponent"
     = react_component "TestReactComponentTS"
+    -# = react_component "TestReactComponentTS"
 
     %h3
-      #structureless
-        = image_tag(ImagesHelper.structureless_image_path('nostructure.jpg'))
+      #structureless      
+        -# = image_tag(ImagesHelper.structureless_image_path('nostructure.jpg'))
+        -# = image_pack_tag "static/assets/images/structureless/nostructure.jpg"
+        -# = image_pack_tag "static/assets/images/structureless/onepunchman.jpg"
+        -# = image_tag "static/assets/images/structureless/onepunchman.jpg"
+        -# = image_pack_tag "static/assets/images/structureless/onepunchman.jpg"
+
+
+        -# = image_pack_tag "static/assets/images/onepunchman.jpg"
+
+        -# = image_pack_tag(ImagesHelper.structureless_image_path('nostructure.jpg'))
+        -# = image_pack_tag 'structureless/nostructure.jpg'
+        -# = image_path_tag '/Users/scottschafer/scratchpad/vault-upgrade-scratchpad/app/assets/images/structureless/nostructure.jpg'
+        -# (ImagesHelper.structureless_image_path('nostructure.jpg'))

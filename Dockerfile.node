@@ -1,4 +1,5 @@
 FROM node:14 as development
+FROM public.ecr.aws/docker/library/ruby:2.7.6 as development
 
 EXPOSE 3036
 EXPOSE 9001

@@ -35,17 +35,21 @@ module Cdd3UiHelper
   #   content_tag(:span, image_tag(("cdd30/#{image}"), options), class: span_class)
   # end
 
-  def image_tag(image, options = {})
-    input_image = options.delete(:thumbnail).nil? ? packed_image_path(image) : image
-    super(input_image, options)
-  end
+  # def image_tag(image, options = {})
+  #   input_image = options.delete(:thumbnail).nil? ? packed_image_path(image) : image
+  #   super(input_image, options)
+  # end
 
-  def image_path(image, options = {})
-    super(packed_image_path(image), options)
-  end
+  # def image_path(image, options = {})
+  #   byebug
+  #   super(packed_image_path(image), options)
+  # end
 
   def packed_image_path(image)
-    ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
+    # byebug
+    # ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
+    # ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
+    image
   end
 
   # def action_arrow_tag(direction)

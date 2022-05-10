@@ -12,7 +12,9 @@
     "jsx": "react",
     "types": [
       "mocha",
-      "chai"
+      "chai",
+      "node",
+      "webpack-env"
     ],
     "baseUrl": ".",
     "paths": {

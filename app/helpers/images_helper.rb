@@ -41,7 +41,7 @@ module ImagesHelper
   #   image_format: "svg".freeze,
   # }.freeze
 
-  STRUCTURELESS_IMAGE_PATH_ROOT = "structureless".freeze
+  STRUCTURELESS_IMAGE_PATH_ROOT = "static/assets/images/structureless".freeze
 
   # # used when grabbing images to put in an Excel export and just about anywhere else
   # def molecule_image_path(molecule, options = {})
@@ -70,6 +70,7 @@ module ImagesHelper
 
   # used when grabbing images to put in an Excel export and just about anywhere else
   def structure_image_path(structure, options = {})
+    byebug
     sanitized_structure = sanitize_structure(structure)
     molecule_image_path_for_sanitized_structure(sanitized_structure, options)
   end
