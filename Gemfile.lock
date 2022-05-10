@@ -99,6 +99,7 @@ GEM
     erubi (1.10.0)
     execjs (2.8.1)
     ffi (1.15.4)
+    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     haml (5.2.2)
@@ -112,6 +113,7 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     libv8-node (16.10.0.0)
+    libv8-node (16.10.0.0-aarch64-linux)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -266,6 +268,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  foreman
   haml
   hashdiff (~> 0.3.7)
   jbuilder (~> 2.5)

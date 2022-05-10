@@ -22,8 +22,6 @@ RUN mkdir -p /home/cdd /cdd && chown cdd.cdd /home/cdd /cdd
 
 # END ROOT TASKS
 
-USER cdd
-
 # Don't try to install gems in the system
 ENV GEM_HOME=/home/cdd/.ruby/
 ENV PATH=/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/cdd/.ruby/bin/
@@ -47,24 +45,11 @@ ENV RSPEC_RETRY_RETRY_COUNT=0
 
 # For selenium
 ENV HEADLESS=true
-
-RUN mkdir -p /cdd
-WORKDIR /cdd
+RUN mkdir -p /vendor/cache
 COPY --chown=cdd:cdd Gemfile* ./
 RUN bundle config --global jobs 6 && bundle config set cache_all true && bundle cache
 
 WORKDIR /tmp/src
-
-CMD bash -c "rm -rf tmp/pids/* ; rails s -b 0.0.0.0"
-
-##################################################################################################################################
-FROM development as external-resources-testing
-USER root
-RUN apt-get install -y chromium xvfb
-USER cdd
-WORKDIR /cdd
-COPY --chown=cdd:cdd . .
-CMD ./bin/rake spec:external_resources
 
 ##################################################################################################################################
 FROM development as ci
@@ -72,13 +57,4 @@ USER root
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs python2 && npm install -g yarn
 
-# No need to update it was done by the node script
-RUN apt-get install -y default-mysql-client
-USER cdd
-WORKDIR /cdd
-COPY --chown=cdd:cdd package.json yarn.lock ./
-COPY --chown=cdd:cdd bin/ ./bin
-COPY --chown=cdd:cdd vendor/open_descriptors/ ./vendor/open_descriptors
-RUN yarn
-COPY --chown=cdd:cdd . .
-RUN yarn build
+CMD bash -c "foreman start -f Procfile.dev"

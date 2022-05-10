@@ -102,6 +102,12 @@ $(JS_PACKAGE_NAME): network yarndev
 stop_scratch-node:
 	docker stop $(JS_PACKAGE_NAME) || true
 
+shaka_image: network
+	docker build -t shaka -f Dockerfile .
+
+shaka: shaka_image
+	docker run --rm -it --name shaka -v $(PWD):/tmp/src -p 127.0.0.1:3000:3000 shaka
+
 stop_cdd:
 	docker stop cdd || true
 
