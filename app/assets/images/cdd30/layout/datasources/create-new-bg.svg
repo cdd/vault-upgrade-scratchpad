@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="199px" height="120px" viewBox="0 0 199 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6 (26304) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 8</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8">
+            <rect id="Rectangle-138-Copy-5" fill="#0077CC" x="0" y="0" width="199" height="40"></rect>
+            <rect id="Rectangle-138-Copy-5" fill="#1262B2" x="167" y="0" width="32" height="40"></rect>
+            <rect id="Rectangle-138-Copy-5" fill="#1262B2" x="0" y="40" width="199" height="40"></rect>
+            <rect id="Rectangle-138-Copy-6" fill="#1262B2" x="0" y="80" width="199" height="40"></rect>
+            <path d="M19,55 L19,59 L15,59 L15,61 L19,61 L19,65 L21.001,65 L21.001,61 L25,61 L25,59 L21.001,59 L21.001,55 L19,55 Z" id="Page-1" fill="#FFFFFF"></path>
+            <path d="M19,95 L19,99 L15,99 L15,101 L19,101 L19,105 L21.001,105 L21.001,101 L25,101 L25,99 L21.001,99 L21.001,95 L19,95 Z" id="Page-1-Copy-8" fill="#FFFFFF"></path>
+            <path d="M179,18 L183,23.1724138 L187,18 L179,18 Z" id="Path-2-Copy-9" fill="#FFFFFF"></path>
+            <rect id="Rectangle-138-Copy-5" fill="#0B559E" x="167" y="40" width="32" height="40"></rect>
+            <rect id="Rectangle-138-Copy-7" fill="#0B559E" x="167" y="80" width="32" height="40"></rect>
+            <path d="M179,58 L183,63.1724138 L187,58 L179,58 Z" id="Path-2-Copy-9" fill="#FFFFFF"></path>
+            <path d="M179,98 L183,103.172414 L187,98 L179,98 Z" id="Path-2-Copy-12" fill="#FFFFFF" transform="translate(183.000000, 100.586207) rotate(-180.000000) translate(-183.000000, -100.586207) "></path>
+            <path d="M19,15 L19,19 L15,19 L15,21 L19,21 L19,25 L21.001,25 L21.001,21 L25,21 L25,19 L21.001,19 L21.001,15 L19,15 Z" id="Page-1" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

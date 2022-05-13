@@ -15,46 +15,42 @@ module Cdd3UiHelper
   def icon_tag(image, options = {})
     options[:class] = ["icon-16", options[:class]].compact.join(" ")
     options[:alt] ||= cdd_image_alt(image)
-    image_tag(("cdd30/icons/#{image}"), { width: 16, height: 16 }.merge(options))
+    image_tag "cdd30/icons/#{image}", { width: 16, height: 16 }.merge(options)
   end
 
-  # def boolean_icon_tag(image)
-  #   image_tag("cdd30/booleans/#{image}" )
-  # end
-
-  # def salts_page_info
-  #   "You can view and download a #{link_to "list of all available salts", support_salts_path}.".html_safe # rubocop:disable Rails/OutputSafety
-  # end
+  def boolean_icon_tag(image)
+    image_tag("cdd30/booleans/#{image}" )
+  end
 
   def layout_icon_tag(image, options = {})
-    image_tag(("cdd30/layout/#{image}"), options)
+    image_tag(("cddlayout/#{image}"), options)
   end
 
-  # def action_icon_tag(image, options = {})
-  #   span_class = ["actionIcon", options.delete(:span_class)].compact.join(" ")
-  #   content_tag(:span, image_tag(("cdd30/#{image}"), options), class: span_class)
-  # end
+  def action_icon_tag(image, options = {})
+    span_class = ["actionIcon", options.delete(:span_class)].compact.join(" ")
+    content_tag(:span, image_tag(("cdd30/#{image}"), options), class: span_class)
+  end
 
-  # def image_tag(image, options = {})
-  #   input_image = options.delete(:thumbnail).nil? ? packed_image_path(image) : image
-  #   super(input_image, options)
-  # end
+  def image_tag(image, options = {})
+    # byebug
+    super(image, options)
+    # "static/assets/images/onepunchman.jpg"
+    # input_image = options.delete(:thumbnail).nil? ? packed_image_path(image) : image
+    # super(input_image, options)
+  end
 
-  # def image_path(image, options = {})
-  #   byebug
-  #   super(packed_image_path(image), options)
-  # end
+  def image_path(image, options = {})
+    super(packed_image_path(image), options)
+  end
 
   def packed_image_path(image)
-    # byebug
-    # ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
-    # ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
-    image
+    ActionController::Base.helpers.asset_pack_path("_/assets/images/#{image}")
   end
 
-  # def action_arrow_tag(direction)
-  #   action_icon_tag("layout/arrows/actionarrow-#{direction}-blue.gif", class: "icon-10", alt: "")
-  # end
+  def action_arrow_tag(direction)
+    action_icon_tag("layout/arrows/actionarrow-#{direction}-blue.gif", class: "icon-10", alt: "")
+  end
+
 
   # def separator_tag(_options = {})
   #   content_tag(:span, " &middot; ".html_safe, class: "separator")
@@ -254,10 +250,10 @@ module Cdd3UiHelper
   # end
 
   # # Copied from rails source.  Seems like it's good enough for us.
-  # def cdd_image_alt(src)
-  #   # ActiveSupport::Deprecation.warn("image_alt is deprecated and will be removed from Rails 6.0. You must explicitly set alt text on images.")
-  #   File.basename(src, ".*".freeze).sub(/-[[:xdigit:]]{32,64}\z/, "".freeze).tr("-_".freeze, " ".freeze).capitalize
-  # end
+  def cdd_image_alt(src)
+    # ActiveSupport::Deprecation.warn("image_alt is deprecated and will be removed from Rails 6.0. You must explicitly set alt text on images.")
+    File.basename(src, ".*".freeze).sub(/-[[:xdigit:]]{32,64}\z/, "".freeze).tr("-_".freeze, " ".freeze).capitalize
+  end
 
   # class CaptureContainerTabBlocks
   #   include Enumerable

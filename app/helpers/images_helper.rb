@@ -1,59 +1,59 @@
-# require "zlib"
+require "zlib"
 
 module ImagesHelper
   extend self # so controllers can call e.g. ImagesHelper.image_path
 
-  # # If you update options here, please duplicate them into
-  # # app/frontend/shared/utils/moleculeImageHelper.js
+  # If you update options here, please duplicate them into
+  # app/frontend/shared/utils/moleculeImageHelper.js
 
-  # DEFAULT_OPTIONS = { # rubocop:disable CDD/DeepFreeze
-  #   width: 219,
-  #   height: 219,
-  #   auto_scale: 1.0
-  # }.freeze
+  DEFAULT_OPTIONS = { # rubocop:disable CDD/DeepFreeze
+    width: 219,
+    height: 219,
+    auto_scale: 1.0,
+  }.freeze
 
-  # EXPORT_OPTIONS = { # rubocop:disable CDD/DeepFreeze
-  #   width: 226,
-  #   height: 161,
-  #   auto_scale: 1.0,
-  #   local_base_url: true,
-  #   image_format: "svg".freeze
-  # }.freeze
+  EXPORT_OPTIONS = { # rubocop:disable CDD/DeepFreeze
+    width: 226,
+    height: 161,
+    auto_scale: 1.0,
+    local_base_url: true,
+    image_format: "svg".freeze,
+  }.freeze
 
-  # MOLECULE_ICON = "_/assets/images/molecule_icon.svg".freeze
-  # MIXTURE_ICON = "_/assets/images/mixture_icon.svg".freeze
+  MOLECULE_ICON = "_/assets/images/molecule_icon.svg".freeze
+  MIXTURE_ICON = "_/assets/images/mixture_icon.svg".freeze
 
-  # STRUCTURE_EDITOR_OPTIONS = { # rubocop:disable CDD/DeepFreeze
-  #   blank_image: MOLECULE_ICON,
-  # }.freeze
+  STRUCTURE_EDITOR_OPTIONS = { # rubocop:disable CDD/DeepFreeze
+    blank_image: MOLECULE_ICON,
+  }.freeze
 
-  # ELN_ATTACHED_STRUCTURE_OPTIONS = { # rubocop:disable CDD/DeepFreeze
-  #   auto_scale: 1.0,
-  #   width: 248,
-  #   height: 248,
-  #   image_format: "svg".freeze,
-  # }.freeze
+  ELN_ATTACHED_STRUCTURE_OPTIONS = { # rubocop:disable CDD/DeepFreeze
+    auto_scale: 1.0,
+    width: 248,
+    height: 248,
+    image_format: "svg".freeze,
+  }.freeze
 
-  # ELN_ATTACHED_REACTION_OPTIONS = { # rubocop:disable CDD/DeepFreeze
-  #   auto_scale: 1.0,
-  #   width: 864,
-  #   height: 248,
-  #   image_format: "svg".freeze,
-  # }.freeze
+  ELN_ATTACHED_REACTION_OPTIONS = { # rubocop:disable CDD/DeepFreeze
+    auto_scale: 1.0,
+    width: 864,
+    height: 248,
+    image_format: "svg".freeze,
+  }.freeze
 
-  STRUCTURELESS_IMAGE_PATH_ROOT = "static/assets/images/structureless".freeze
+  STRUCTURELESS_IMAGE_PATH_ROOT = "structureless".freeze
 
-  # # used when grabbing images to put in an Excel export and just about anywhere else
-  # def molecule_image_path(molecule, options = {})
-  #   structure = molecule.mrv
-  #   molecule_image_path_given_structure(molecule, structure, options)
-  # end
+  # used when grabbing images to put in an Excel export and just about anywhere else
+  def molecule_image_path(molecule, options = {})
+    structure = molecule.mrv
+    molecule_image_path_given_structure(molecule, structure, options)
+  end
 
-  # # used when the mrv gives an invalid structure but the display structure may not - for exporting
-  # def molecule_image_path_display_structure(molecule, options = {})
-  #   structure = molecule&.structure_for_display
-  #   molecule_image_path_given_structure(molecule, structure, options)
-  # end
+  # used when the mrv gives an invalid structure but the display structure may not - for exporting
+  def molecule_image_path_display_structure(molecule, options = {})
+    structure = molecule&.structure_for_display
+    molecule_image_path_given_structure(molecule, structure, options)
+  end
 
   def structureless_image_path(name)
     "#{STRUCTURELESS_IMAGE_PATH_ROOT}/#{name}"
@@ -70,7 +70,6 @@ module ImagesHelper
 
   # used when grabbing images to put in an Excel export and just about anywhere else
   def structure_image_path(structure, options = {})
-    byebug
     sanitized_structure = sanitize_structure(structure)
     molecule_image_path_for_sanitized_structure(sanitized_structure, options)
   end
@@ -111,18 +110,24 @@ module ImagesHelper
     src.merge({
       alt: (has_structure ? "structure image" : "no structure"),
       class: css_class,
-      title: options_with_defaults[:title]
+      title: options_with_defaults[:title],
     })
   end
 
   def molecule_image_tag(molecule, options = {})
+    if molecule.external_data_object.nil? || @current_user.mask_structures?
+      return structureless_image_tag(molecule.vault.structureless_image_name, options)
+    end
+
+    if molecule.external_data_file&.external_data_object.present? && molecule.external_data_file.thumbnails.allowed?
+      options_with_defaults = options.reverse_merge(ImagesHelper::DEFAULT_OPTIONS)
+      return thumbnail(molecule.external_data_file, width: options_with_defaults[:width], height: options_with_defaults[:height])
+    end
+
     return mixture_image_stimulated(molecule, options) if molecule.is_mixture?
     return sequence_image_stimulated(molecule, options) if molecule.is_nucleotide? || molecule.is_amino_acid?
 
-    structure = molecule.structure_for_display
-    return structureless_image_tag(molecule.vault.structureless_image_name, options) if structure.blank?
-
-    structure_image_tag(structure, options)
+    structure_image_tag(molecule.structure_for_display, options)
   end
 
   # used below and when displaying structures in search results and molecule show page
@@ -175,7 +180,7 @@ module ImagesHelper
 
   # used when building a search - when we have no structure we invite the user to create one
   def search_structure_editor_molecule_image_tag(search)
-    structure = search.structure
+    structure = search.get_structure_to_populate_form
     options = STRUCTURE_EDITOR_OPTIONS.reject { |key, _value| %i[width height].include?(key) }
     structure_editor_molecule_image_tag(structure, options)
   end
@@ -205,7 +210,7 @@ module ImagesHelper
       width: options[:width],
       height: options[:height],
       auto_scale: options[:auto_scale],
-      image_format: options[:image_format] || "svg"
+      image_format: options[:image_format] || "svg",
     }
     if options[:substructure]
       parameters[:substructure] = encode_structure_string_for_url(options[:substructure])

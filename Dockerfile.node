@@ -1,7 +1,7 @@
 FROM node:14 as development
 FROM public.ecr.aws/docker/library/ruby:2.7.6 as development
 
-EXPOSE 3036
+EXPOSE 3035
 EXPOSE 9001
 ENV NODE_ENV=development
 ENV DOCKER_CONTAINER=true

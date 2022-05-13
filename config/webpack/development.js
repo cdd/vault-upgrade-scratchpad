@@ -19,7 +19,7 @@ const developmentEnvOnly = (clientWebpackConfig, serverWebpackConfig) => {
       })
     )
   }
-
+  
   clientWebpackConfig.plugins.push(
     new ForkTsCheckerWebpackPlugin({
       typescript: {
@@ -30,3 +30,4 @@ const developmentEnvOnly = (clientWebpackConfig, serverWebpackConfig) => {
   )
 }
 module.exports = webpackConfig(developmentEnvOnly)
+console.log( module.exports.devServer)

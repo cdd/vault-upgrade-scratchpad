@@ -1,6 +1,11 @@
 FROM public.ecr.aws/docker/library/ruby:2.7.6 as development
+
+EXPOSE 3035
+EXPOSE 9001
+
 # FROM public.ecr.aws/docker/library/ruby:${RUBY_VERSION} as development
 ENV TZ=UTC
+
 
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
@@ -58,3 +63,5 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs python2 && npm install -g yarn
 
 CMD bash -c "foreman start -f Procfile.dev"
+EXPOSE 3035
+EXPOSE 9001
