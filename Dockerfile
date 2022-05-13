@@ -10,7 +10,11 @@ ENV TZ=UTC
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev \
-  libmagic-dev default-jdk unzip direnv
+  libmagic-dev default-jdk unzip direnv 
+
+# Install node
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o /tmp/nodesource_setup.sh && bash /tmp/nodesource_setup.sh && apt-get install nodejs
+RUN npm install -g yarn
 
 # So we know we're in a container - useful for testing (selenium remote, etc)
 ENV DOCKER_CONTAINER=true
@@ -62,4 +66,4 @@ USER root
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs python2 && npm install -g yarn
 
-CMD bash -c "foreman start -f Procfile.dev"
+CMD bash -c "yarn && foreman start -f Procfile.dev"
