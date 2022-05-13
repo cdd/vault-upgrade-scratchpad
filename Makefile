@@ -106,7 +106,7 @@ shaka_image: network
 	docker build -t shaka -f Dockerfile .
 
 shaka: shaka_image
-	docker run --rm -it --name shaka -v $(PWD):/tmp/src -p 127.0.0.1:3000:3000 shaka
+	docker run --rm -it --name shaka -v $(PWD):/tmp/src -p 127.0.0.1:3000:3000 -p 127.0.0.1:3035:3035 shaka
 
 stop_cdd:
 	docker stop cdd || true
