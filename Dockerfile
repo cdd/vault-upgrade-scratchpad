@@ -63,5 +63,3 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs python2 && npm install -g yarn
 
 CMD bash -c "foreman start -f Procfile.dev"
-EXPOSE 3035
-EXPOSE 9001
