@@ -14,7 +14,7 @@ module.exports = function(config) {
       'karma-spec-reporter',
     ],
     files: [
-      '../spec/**/*.jsx',
+      '../spec/**/*.{jsx|tsx}',
     ],
     preprocessors: {
       '../**/*.spec.jsx': ['webpack'],

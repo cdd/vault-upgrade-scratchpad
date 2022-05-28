@@ -20,7 +20,7 @@ class TestReactComponentTS extends React.Component<{}, { count: number }> {
   render() {
     const { count } = this.state;
     return (<div style={{ border: "1px solid black", padding: 5, background: 'lightblue', width: 500 }}>
-      <h1>React component: TestReactComponentTS xxx
+      <h1>React component: TestReactComponentTS xxxyz
 
       </h1>
       <div>

@@ -124,6 +124,9 @@ node_shell: cdd_node_interactive
 cdd_node_interactive: yarndev_image stop_scratch-node
 	$(call yarn_dev, -p 127.0.0.1:9002:9002 -it) bash
 
+shaka_shell: image_exists network ## Interactive shell
+	$(call shaka_image, -p 127.0.0.1:9002:9002 -it) bash
+
 yarndev_running:
 	(docker ps -f name=$(JS_PACKAGE_NAME) | grep $(JS_PACKAGE_NAME)) || $(MAKE) yarndev
 

@@ -1,5 +1,4 @@
 FROM node:14 as development
-FROM public.ecr.aws/docker/library/ruby:2.7.6 as development
 
 EXPOSE 3035
 EXPOSE 9001
@@ -11,7 +10,7 @@ WORKDIR /tmp/src
 
 FROM development as ci
 COPY package.json yarn.lock .postcssrc.yml ./
-COPY babel.config.js .
+COPY .babelrc .
 COPY .eslint* ./
 RUN yarn install
 CMD yarn jstart
