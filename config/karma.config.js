@@ -24,26 +24,22 @@ if (process.env.DOCKER_CONTAINER === 'true') {
 } else {
   browsers = ['Chrome']
 }
-
 module.exports = function (config) {
   config.set({
     browsers,
     hostname,
     port,
+
+    // TODO: include or no?
     plugins,
-    // logLevel: config.LOG_DEBUG,
-    // karma only needs to know about the test bundle
+
+    singleRun: true, //just run once by default
+    frameworks: ['mocha'], //use the mocha test framework
     files: [
       '../spec/frontend/index.js',
     ],
-    frameworks: [ 'chai', 'mocha', 'sinon', 'jquery-1.11.0' ],
-    // run the bundle through the webpack and sourcemap plugins
     preprocessors: {
-      '../spec/frontend/index.js': ['webpack', 'sourcemap'],
-    },
-    reporters: ['mocha'],
-    mochaReporter: {
-      showDiff: true,
+      'tests.webpack.js': [ /* 'webpack', */ 'sourcemap'] //preprocess with webpack and our sourcemap loader
     },
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
@@ -61,11 +57,25 @@ module.exports = function (config) {
         },
       },
     },
-    singleRun: !config.watch,
-    webpack: Object.assign({}, webpackConfig, {
+    reporters: ['dots'], //report results in this format
+    webpack: { //kind of a copy of your webpack config
+
+      ...webpackConfig,
       bail: !config.watch,
-      devtool: 'inline-source-map',
-    }),
+      optimization: {
+        runtimeChunk: false,
+        splitChunks: false,
+      },
+      devtool: 'inline-source-map', //just do inline source maps instead of the default
+      module: {
+        loaders: [
+          { test: /\.js$/, loader: 'babel-loader' }
+        ]
+      }
+    },
+    webpackServer: {
+      noInfo: true //please don't spam the console when running in karma!
+    },
     webpackMiddleware: {
       noInfo: true,
     },
@@ -73,5 +83,5 @@ module.exports = function (config) {
       captureConsole: true,
     },
     restartOnFileChange: true,
-  })
-}
+  });
+};

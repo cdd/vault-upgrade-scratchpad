@@ -8,11 +8,11 @@ RUN mkdir -p /tmp/src
 WORKDIR /tmp/src
 
 COPY package.json yarn.lock .postcssrc.yml ./
-COPY .babelrc .
+COPY babel.config.js .
 
 RUN yarn install
 
-COPY public/ public/
+# COPY public/ public/
 COPY config/webpacker.yml ./config/
 COPY config/webpack/* ./config/webpack/
 COPY config/karma.config.js ./config/

@@ -1,15 +1,7 @@
-const environment = require('./environment')
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
-const sharedTest = require('./sharedTest')
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-environment.plugins.append(
-  'CommonsChunkCommons',
-  new CommonsChunkPlugin({
-    name: 'commons',
-    minChunks: 2,
-  }),
-  { before: 'manifest' }
-)
+const environment = require('./environment')
+const sharedTest = require('./sharedTest')
 
 environment.config.merge({
   devtool: 'cheap-module-source-map',
